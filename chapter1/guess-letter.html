@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Hello World</title>
+</head>
+
+<body>
+  <canvas id="canvas" width="300" height="300"></canvas>
+  <script type="text/javascript">
+      window.addEventListener('load', eventWindowLoaded, false)
+
+
+      function eventWindowLoaded () {
+        canvasApp()
+      }
+
+      function canvasApp () {
+        let gameOver = false
+        let guessCount = 0
+        let letters = 'abcdefghijklmnopqrstuvwxyz'.split('')
+        let guessLetter = letters[Math.random() * letters.length | 0]
+        let higherOrLower = 'let me guess'
+        let $vanvas = document.querySelector('#canvas')
+        let context = $vanvas.getContext('2d')
+
+        console.log('drawing canvas')
+
+        console.log(`random: ${guessLetter}`);
+
+        window.addEventListener('keyup', eventKeyup, false)
+
+        drawScreen(context, higherOrLower)
+
+        function eventKeyup (event) {
+          if (gameOver) return
+
+          let letter = String.fromCharCode(event.keyCode).toLowerCase()
+
+          guessCount++
+
+          if (letter === guessLetter) {
+            gameOver = true
+            higherOrLower = `you win with count: ${guessCount}`
+          } else {
+            let letterIndex = letters.indexOf(letter)
+            let guessIndex = letters.indexOf(guessLetter)
+
+            if (letterIndex < 0) {
+              higherOrLower = 'should be letter'
+            } else if (letterIndex > guessIndex) {
+              higherOrLower = 'lower'
+            } else {
+              higherOrLower = 'higher'
+            }
+          }
+
+          drawScreen(context, higherOrLower)
+        }
+      }
+
+      function drawScreen (context, text) {
+        context.fillStyle = '#ffffaa'
+        context.fillRect(0, 0, 300, 300)
+
+        context.fillStyle = '#000000'
+        context.font = '20px Sans-Serif'
+        context.textBaseline = 'top'
+        context.fillText(text, 80, 80)
+
+        context.strokeStyle = '#000000'
+        context.strokeRect(5, 5, 290, 290)
+      }
+    </script>
+</body>
+
+</html>
