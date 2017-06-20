@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Hello World</title>
+</head>
+
+<body>
+  <canvas id="canvas" width="300" height="300"></canvas>
+  <script type="text/javascript">
+      window.addEventListener('load', eventWindowLoaded, false)
+
+      function eventWindowLoaded () {
+        canvasApp()
+      }
+
+      function canvasApp () {
+        let fadeIn = true
+        let alpha = 0
+        let $vanvas = document.querySelector('#canvas')
+        let context = $vanvas.getContext('2d')
+
+        requestAnimationFrame(draw)
+
+        function draw () {
+          if (fadeIn) {
+            alpha += .01
+
+            if (alpha >= 1) {
+              fadeIn = false
+              alpha = 1
+            }
+          } else {
+            alpha -= .01
+
+            if (alpha < 0) {
+              fadeIn = true
+              alpha = 0
+            }
+          }
+          drawScreen({context, alpha})
+
+          requestAnimationFrame(draw)
+        }
+      }
+
+      function drawScreen ({context, alpha}) {
+
+        context.globalAlpha = 1
+        context.fillStyle = '#ffffff'
+        context.fillRect(0, 0, 300, 300)
+
+        context.fillStyle = '#000000'
+        context.font = '36px Sans-Serif'
+        context.textBaseline = 'top'
+        context.globalAlpha = alpha
+        context.fillText('Hello World', 80, 80)
+      }
+    </script>
+</body>
+
+</html>
