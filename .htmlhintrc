@@ -11,6 +11,6 @@
   "attr-value-not-empty": true,
   "title-require": true,
   "src-not-empty": true,
-  "tag-self-close": true,
+  "tag-self-close": false,
   "attr-no-duplication": true
 }
