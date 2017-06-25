@@ -1,4 +1,4 @@
-let u = window.util = {
+window.util = {
   getAngle (radian) {
     return (Math.PI / 180) * radian
   },
@@ -8,7 +8,10 @@ let u = window.util = {
 }
 
 // test
-// let angle = u.getAngle(95)
-// let radian = u.getRadian(angle)
-// console.log(radian)
+// $(win => {
+//   let u = win.util
+//   let angle = u.getAngle(95)
+//   let radian = u.getRadian(angle)
+//   console.log(radian)
+// }, window)
 // test end
