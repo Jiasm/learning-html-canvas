@@ -38,13 +38,40 @@
       function drawScreen () {
         // 代码写在这里
 
+        // 在屏幕上绘制一个大方块
+        context.fillStyle = 'black'
+        context.fillRect(10, 10, 200, 200)
+        context.save()
         context.beginPath()
-        context.strokeStyle = 'black'
+
+        // 裁切画布从（0， 0）点至 50x50的正方形
+        context.rect(0, 0, 50, 50)
+        context.clip()
+
+        // 红色圈
+        context.beginPath()
+        context.strokeStyle = 'red'
         context.lineWidth = 5
+        context.arc(100, 100, 100, util.getAngle(0), util.getAngle(360), false)
 
-        // 绘制一下从6点钟开始逆时针的线条，在3点钟位置结束
-        context.arc(100, 100, 20, util.getAngle(0), util.getAngle(90), false)
+        // 整圈
+        context.stroke()
+        context.closePath()
 
+        context.restore()
+
+        // 再次裁切整个画布
+        context.beginPath()
+        context.rect(0, 0, 500, 300)
+        context.clip()
+
+        // 绘制一个没有裁切的蓝线
+        context.beginPath()
+        context.strokeStyle = 'blue'
+        context.lineWidth = 5
+        context.arc(100, 100, 50, util.getAngle(0), util.getAngle(360), false)
+
+        // 整圈
         context.stroke()
         context.closePath()
       }

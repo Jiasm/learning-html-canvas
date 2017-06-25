@@ -41,6 +41,8 @@
         context.beginPath()
         context.strokeStyle = 'black'
         context.lineWidth = 5
+
+        // 绘制一下从6点钟开始顺时针的线条，在3点钟位置结束
         context.arc(100, 100, 20, util.getAngle(0), util.getAngle(90), true)
 
         context.stroke()
