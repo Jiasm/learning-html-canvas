@@ -38,12 +38,13 @@
       function drawScreen () {
         // 代码写在这里
 
-        context.fillStyle = '#aaaaaa'
-        context.fillRect(0, 0, 200, 200)
-        context.fillStyle = '#000000'
-        context.font = '20px Sans-Serif'
-        context.textBaseline = 'top'
-        context.fillText('Canvas', 0, 0)
+        context.beginPath()
+        context.strokeStyle = 'black'
+        context.lineWidth = 5
+        context.arc(100, 100, 20, util.getAngle(0), util.getAngle(90), false)
+
+        context.stroke()
+        context.closePath()
       }
     }
   </script>

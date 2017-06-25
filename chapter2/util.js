@@ -8,7 +8,7 @@ let u = window.util = {
 }
 
 // test
-let angle = u.getAngle(95)
-let radian = u.getRadian(angle)
-console.log(radian)
+// let angle = u.getAngle(95)
+// let radian = u.getRadian(angle)
+// console.log(radian)
 // test end
