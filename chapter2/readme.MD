@@ -12,7 +12,7 @@ let y = 100
 let width = 50
 let height = 50
 
-context.tranlate(x + 0.5 * width, y + 0.5 * height)
+context.translate(x + 0.5 * width, y + 0.5 * height)
 context.rotate(angleInRadians)
 context.fillStyle = 'red'
 context.fillRect(-0.5 * width, -0.5 * height, width, height)
