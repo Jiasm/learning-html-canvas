@@ -4,6 +4,9 @@ window.util = {
   },
   getRadian (angle) {
     return angle / (Math.PI / 180)
+  },
+  resetTransform (context) {
+    context.setTransform(1, 0, 0, 1, 0, 0)
   }
 }
 
