@@ -39,17 +39,23 @@
         // 代码写在这里
 
         // 创建渐变的对象
-        let gr = context.createLinearGradient(0, 0, 100, 0)
+        let gr = context.createLinearGradient(0, 0, 0, 100)
 
         gr.addColorStop(0, 'rgb(255, 0, 0)')
         gr.addColorStop(0.5, 'rgb(0, 255, 0)')
         gr.addColorStop(1, 'rgb(255, 0, 0)')
 
-        context.strokeStyle = gr
-        // context.lineWidth = 5 // 设置该属性可以修改stroke的线条宽度
-        context.strokeRect(0, 0, 100, 100)
-        context.strokeRect(0, 100, 50, 100)
-        context.strokeRect(0, 200, 200, 100)
+        context.fillStyle = gr
+        context.beginPath()
+        context.moveTo(0, 0)
+        context.lineTo(50, 0)
+        context.lineTo(100, 50)
+        context.lineTo(50, 100)
+        context.lineTo(0, 100)
+
+        context.lineTo(0, 0)
+        context.fill()
+        context.closePath()
       }
     }
   </script>
