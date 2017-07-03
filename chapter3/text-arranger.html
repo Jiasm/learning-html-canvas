@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>templete</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      width: 500px;
+      height: 500px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="500" height="500"></canvas>
+  <div class="form-group">
+    <label for="message">put your message</label>
+    <input id="message" class="form-control" type="text" name="message" />
+  </div>
+  <div class="form-group">
+    <label for="back-color">change font color</label>
+    <input id="back-color" type="color" value="#aaaaaa">
+  </div>
+  <div class="form-group">
+    <label for="font-style">select font style</label>
+    <select id="font-style" class="form-control" name="font-style">
+      <option selected="selected">normal</option>
+      <option>italic</option>
+      <option>oblique</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="font-size">change font size</label>
+    <input id="font-size" type="range" min="12" max="200" value="16">
+  </div>
+  <div class="form-group">
+    <label for="font-color">change font color</label>
+    <input id="font-color" type="color" value="#000000">
+  </div>
+  <script type="text/javascript" src="./util.js"></script>
+  <script type="text/javascript">
+    window.addEventListener('load', eventWindowLoaded, false)
+
+    let $message = document.querySelector('#message')
+    let $backColor = document.querySelector('#back-color')
+    let $fontStyle = document.querySelector('#font-style')
+    let $fontSize = document.querySelector('#font-size')
+    let $fontColor = document.querySelector('#font-color')
+
+    function eventWindowLoaded () {
+      canvasApp()
+    }
+
+    function canvasApp () {
+      let $canvas = document.querySelector('#canvas')
+      let context = $canvas.getContext('2d')
+      let options = {
+        backColor: '#aaaaaa',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: '16px',
+        fontFace: 'sans-serif',
+        fontColor: '#000000'
+      }
+
+      $message.addEventListener('keyup', ({keyCode}) => {
+        if (keyCode === 13) {
+          drawScreen({message: $message.value})
+        }
+      })
+
+      $backColor.addEventListener('change', () => {
+        drawScreen({backColor: $backColor.value})
+      })
+
+      $fontStyle.addEventListener('change', () => {
+        drawScreen({fontStyle: $fontStyle.value})
+      })
+
+      $fontSize.addEventListener('change', () => {
+        drawScreen({fontSize: `${$fontSize.value}px`})
+      })
+
+      $fontColor.addEventListener('change', () => {
+        drawScreen({fontColor: $fontColor.value})
+      })
+
+      function drawScreen ({
+        message = options.message,
+        backColor = options.backColor,
+        fontStyle = options.fontStyle,
+        fontWeight = options.fontWeight,
+        fontSize = options.fontSize,
+        fontFace = options.fontFace,
+        fontColor = options.fontColor
+      }) {
+        // 代码写在这里
+
+        context.fillStyle = backColor
+        context.fillRect(0, 0, 500, 500)
+        context.fillStyle = fontColor
+        context.font = `${fontStyle} ${fontWeight} ${fontSize} ${fontFace}`
+        context.textBaseline = 'top'
+        context.fillText(message, 0, 0)
+
+        options = {
+          message,
+          backColor,
+          fontStyle,
+          fontWeight,
+          fontSize,
+          fontFace,
+          fontColor
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
