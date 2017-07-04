@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>templete</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      width: 500px;
+      height: 500px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="500" height="500"></canvas>
+  <div id="form-wrap"></div>
+  <script type="text/javascript" src="./util.js"></script>
+  <script type="text/javascript">
+    window.addEventListener('load', eventWindowLoaded, false)
+
+    let formControls = [
+      {
+        inputType: 'text',  // input[type]
+        type: 'text',  // data-[type]
+        label: 'Text'  // label:
+      }, {
+        inputType: 'select',
+        type: 'textFont',
+        options: [
+          'serif',
+          'sans-serif'
+        ],  // select special
+        value: 'serif',
+        label: 'Text Font'
+      }, {
+        inputType: 'select',
+        type: 'fontWeight',
+        options: [
+          'normal',
+          'bold'
+        ],  // select special
+        value: 'normal',
+        label: 'Font Weight'
+      }, {
+        inputType: 'color',
+        type: 'fontColor',
+        value: '#000000'
+      }
+    ]
+
+    function initControl (container, controls) {
+      let $container = document.querySelector(container)
+      let str = ''
+      controls.forEach(item => {
+        let itemText = `<div class="control-group">`
+        itemText += `<label for="control-${item.type}" class="control-label">${item.label || item.type}</label>`
+        switch (item.inputType) {
+          case 'color':
+          case 'text':
+            itemText += `
+            <input class="control-item" id="control-${item.type}" type="${item.inputType}" data-type="${item.type}" value="${item.value || ''}" />
+            `
+            break
+          case 'select':
+            itemText += `
+            <select class="control-item" id="control-${item.type}" data-type="${item.type}">
+              ${item.options && item.options.map(option => {
+                if (typeof option !== 'object') {
+                  let selected = option === item.value
+                  return `<option ${selected && 'selected'}>${option}</option>`
+                } else {
+                  let selected = option.value === item.value
+                  return `<option ${selected && 'selected'} value="${option.value}">${option.value}</option>`
+                }
+              })}
+            </select>
+            `
+            break
+          default: return
+        }
+
+        itemText += '</div>'
+        str += itemText
+      })
+
+      $container.innerHTML = str
+    }
+
+    function initEvent () {
+      document.querySelectorAll('.control-item').forEach(item => {
+        item.addEventListener('change', changeHandler, false)
+      })
+
+      function changeHandler ({target}) {
+        let {type} = target.dataset
+        let {value} = target
+
+        console.log(type, value)
+      }
+    }
+
+    function init () {
+      initControl('#form-wrap', formControls)
+      initEvent()
+    }
+
+    function eventWindowLoaded () {
+      init()
+    }
+  </script>
+</body>
+
+</html>
