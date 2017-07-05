@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>templete</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      width: 500px;
+      height: 500px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="500" height="500"></canvas>
+  <script type="text/javascript" src="./util.js"></script>
+  <script type="text/javascript">
+    window.addEventListener('load', eventWindowLoaded, false)
+
+    function eventWindowLoaded () {
+      canvasApp()
+    }
+
+    function canvasApp () {
+      let $canvas = document.querySelector('#canvas')
+      let context = $canvas.getContext('2d')
+      let ship = new Image()
+
+      ship.addEventListener('load', drawScreen)
+      ship.src = '../dist/ship.png'
+
+      function drawScreen () {
+        // 代码写在这里
+
+        context.drawImage(ship, 0, 0)
+        context.drawImage(ship, 0, 34, 32, 32)
+        context.drawImage(ship, 0, 68, 64, 64)
+        context.drawImage(ship, 0, 140, 16, 16)
+        //                图像资源, x轴的位置, y轴的位置, 图像的宽度, 图像的高度
+      }
+    }
+  </script>
+</body>
+
+</html>
