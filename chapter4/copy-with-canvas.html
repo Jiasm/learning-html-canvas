@@ -59,7 +59,29 @@
       }
 
       function drawWithCanvas (cellX, cellY) {
+        context2.fillStyle = '#03a9f4'
+        context2.fillRect(0, 0, 400, 256)
         context2.drawImage($canvas, cellX * cellWidth, cellY * cellHeight, cellWidth, cellHeight, 0, 0, cellWidth, cellHeight)
+
+        let imageData = context2.getImageData(0, 0, cellWidth, cellHeight)
+
+        let {data} = imageData
+        for (var i = 0; i < data.length; i+= 4) {
+          let r = data[i]
+          let g = data[i + 1]
+          let b = data[i + 2]
+          let a = data[i + 3]
+
+          if ((r + g + b) === 0) {
+            imageData.data[i] = 3
+            imageData.data[i + 1] = 169
+            imageData.data[i + 2] = 244
+
+            // imageData.data[i + 3] = 0
+          }
+        }
+
+        context2.putImageData(imageData, 0, 0)
       }
     }
   </script>
