@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>templete</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      width: 400px;
+      height: 256px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="400" height="256"></canvas>
+  <canvas id="canvas2" width="400" height="256"></canvas>
+  <script type="text/javascript" src="./util.js"></script>
+  <script type="text/javascript">
+    window.addEventListener('load', eventWindowLoaded, false)
+    function eventWindowLoaded () {
+      let img = new Image()
+      img.src = '../battle-city/resource/image/battle_city.png'
+
+      img.addEventListener('load', canvasApp.bind(null, img))
+    }
+
+    function canvasApp (img) {
+      let cellWidth = 16
+      let cellHeight = 16
+      let $canvas = document.querySelector('#canvas')
+      let $canvas2 = document.querySelector('#canvas2')
+      let context = $canvas.getContext('2d')
+      let context2 = $canvas2.getContext('2d')
+
+      $canvas.addEventListener('click', e => {
+        let x = e.clientX - $canvas.offsetLeft
+        let y = e.clientY - $canvas.offsetTop
+
+        let cellX = Math.ceil(x / cellWidth) - 1
+        let cellY = Math.ceil(y / cellHeight) - 1
+
+        drawWithCanvas(cellX, cellY)
+      })
+
+      drawScreen()
+
+      function drawScreen () {
+        // 代码写在这里
+
+        context.drawImage(img, 0, 0, 400, 256)
+      }
+
+      function drawWithCanvas (cellX, cellY) {
+        context2.drawImage($canvas, cellX * cellWidth, cellY * cellHeight, cellWidth, cellHeight, 0, 0, cellWidth, cellHeight)
+      }
+    }
+  </script>
+</body>
+
+</html>
