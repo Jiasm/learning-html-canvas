@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>templete</title>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      width: 500px;
+      height: 500px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="500" height="500"></canvas>
+  <script type="text/javascript" src="./util.js"></script>
+  <script type="text/javascript">
+    window.addEventListener('load', eventWindowLoaded, false)
+
+    function eventWindowLoaded () {
+      canvasApp()
+    }
+
+    function canvasApp () {
+      let $canvas = document.querySelector('#canvas')
+      let context = $canvas.getContext('2d')
+
+      // let p1 = { x: 20, y: 20 }
+      let balls = new Array(20).fill(null).map(ball => {
+        return {
+          xunints: 0,
+          yunints: 0,
+          size: (Math.random() * 15 | 0) + 15,
+          angle: Math.random() * 360 | 0,
+          x: Math.random() * 500 | 0,
+          y: Math.random() * 500 | 0
+        }
+      }).map(ball => {
+        return {
+          ...ball,
+          ...updateBall(ball)
+        }
+      })
+
+      // let ball = { x: p1.x, y: p1.y }
+      // let angle = 35
+      // updateBall()
+
+      function updateBall ({angle, size}) {
+        let radians = window.util.getAngle(angle)
+
+        xunints = Math.cos(radians) * size / 3
+        yunints = Math.sin(radians) * size / 3
+
+        return {
+          xunints,
+          yunints
+        }
+      }
+
+      function drawScreen () {
+        // 代码写在这里
+
+        context.fillStyle = '#EEEEEE'
+        context.fillRect(0, 0, $canvas.width, $canvas.height)
+        context.strokeStyle = '#000000'
+        context.strokeRect(1, 1, $canvas.width - 2, $canvas.height - 2)
+
+        balls.forEach((ball = {}, index) => {
+          ball.x = ball.x + ball.xunints
+          ball.y = ball.y + ball.yunints
+
+          context.fillStyle = '#000000'
+          context.beginPath()
+          context.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2, true)
+          context.closePath()
+          context.fill()
+
+          if (ball.x > $canvas.width || ball.x < 0) {
+            ball.angle = 180 - ball.angle
+          } else if (ball.y > $canvas.height || ball.y < 0) {
+            ball.angle = 360 - ball.angle
+          } else {
+            return
+          }
+
+          balls[index] = {
+            ...ball,
+            ...updateBall(ball)
+          }
+        })
+      }
+
+      function gameLoop () {
+        requestAnimationFrame(gameLoop)
+
+        drawScreen()
+      }
+
+      gameLoop()
+    }
+  </script>
+</body>
+
+</html>
