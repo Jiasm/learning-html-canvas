@@ -15,6 +15,7 @@
       width: 500px;
       height: 500px;
       border: 1px solid black;
+      margin: 0 auto;
     }
   </style>
 </head>
@@ -32,7 +33,7 @@
     function canvasApp () {
       let $canvas = document.querySelector('#canvas')
       let context = $canvas.getContext('2d')
-      let numBalls = 60
+      let numBalls = 200
       let maxSize = 15
       let minSize = 5
       let maxSpeed = maxSize + 5
@@ -45,11 +46,11 @@
         let tempBall
 
         while (!placeOK) {
-          let x = radius * 3 + (Math.floor(Math.random() * $canvas.width) - radius * 3)
-          let y = radius * 3 + (Math.floor(Math.random() * $canvas.height) - radius * 3)
+          let x = Math.floor(Math.random() * $canvas.width)
+          let y = Math.floor(Math.random() * $canvas.height)
 
           let speed = 4
-          let angle = Math.floor(Math.random() * 360)
+          let angle = Math.floor(Math.random() * 180 + 180)
           radius = window.util.getAngle(angle)
 
           let velocityx = Math.cos(radius) * speed
@@ -58,8 +59,8 @@
           tempBall = {
             x,
             y,
-            nextX: x,
-            nextY: y,
+            nextx: x,
+            nexty: y,
             radius,
             speed,
             angle,
@@ -161,9 +162,9 @@
         for (let i = 0; i < balls.length; i++) {
           let ball = balls[i]
 
-          for (let j = 0; j < balls.length; j++) {
+          for (let j = i + 1; j < balls.length; j++) {
             if (i === j) continue
-            let testBall = balls[i]
+            let testBall = balls[j]
 
             if (hitTestCircle(ball, testBall)) {
               collideBalls(ball, testBall)
